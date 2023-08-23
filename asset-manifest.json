@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/viren-portfolio/static/css/main.4f975e09.css",
+    "main.js": "/viren-portfolio/static/js/main.fd0d5345.js",
+    "static/media/me-about.jpg": "/viren-portfolio/static/media/me-about.24bf3aa97c863743f142.jpg",
+    "static/media/tesla-clone.PNG": "/viren-portfolio/static/media/tesla-clone.d4ae6baa60912bfa3bd5.PNG",
+    "static/media/Sneaker-website.PNG": "/viren-portfolio/static/media/Sneaker-website.f468eb3db51663799b8e.PNG",
+    "static/media/viren-img1.png": "/viren-portfolio/static/media/viren-img1.665e77e5339ede4ea3fc.png",
+    "static/media/Virendra_Resume.docx": "/viren-portfolio/static/media/Virendra_Resume.fee9007e3c7d9cd29ec7.docx",
+    "index.html": "/viren-portfolio/index.html",
+    "main.4f975e09.css.map": "/viren-portfolio/static/css/main.4f975e09.css.map",
+    "main.fd0d5345.js.map": "/viren-portfolio/static/js/main.fd0d5345.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.4f975e09.css",
+    "static/js/main.fd0d5345.js"
+  ]
+}
