@@ -1,7 +1,7 @@
 .portfolio_container{
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
+  margin-right: 3rem;
+  display: flex;
+  gap: 4rem;
 }
 
 .portfolio_item{
@@ -23,20 +23,34 @@
 }
 
 .portfolio_item h3{
-  margin: 1.2rem 0 2rem;
+  margin: 1.5rem 0 1.8rem;
+  color: #93FDDD;
 }
 
 .portfolio_item-cta{
   display: flex;
   gap: 1rem;
-  margin-bottom: 1rem;
 }
 
+.portfolio_scroll{
+  display: flex;
+  overflow-x: auto;
+  ;
+}
+
+
 /* ======== Media Queries (Medium Devices) ========== */
-@media screen and (max-width: 1024px){
+@media screen and (min-width: 600px){
   .portfolio_container{
     grid-template-columns: 1fr 1fr;
-    gap: 1.2rem;
+    gap: 4rem;
+    margin: 0;
+  }
+  .portfolio_scroll{
+    margin: 0 4rem 0 4rem;
+  }
+  .spacer{
+    flex: 0 0 1rem;
   }
 }
 
@@ -46,5 +60,23 @@
   .portfolio_container{
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+  .spacer{
+    flex: 0 0 1rem;
+  }
+}
+
+/* ======== Media Queries (Large Devices) ========== */
+@media screen and (min-width: 1024px){
+  .portfolio_container{
+    margin-left: 2.4rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 7rem;
+  }
+  .portfolio_scroll{
+    margin: 0 8rem 0 8rem;
+  }
+  .spacer{
+    flex: 0 0 0;
   }
 }

@@ -4,7 +4,7 @@ import {MdOutlineMail} from "react-icons/md";
 import {RiMessengerLine} from "react-icons/ri"
 import {BsWhatsapp} from "react-icons/bs";
 import { useRef } from 'react';
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 
 const Contact = () => {
   const form = useRef();
@@ -34,12 +34,6 @@ const Contact = () => {
             <h4>Messenger</h4>
             <h5>Virendra Purohit</h5>
             <a href="https://m.me/virendra.purohit" target="_blank">Send a message</a>
-          </article>
-          <article className="contact_option">
-            <BsWhatsapp className="contact-option-icon" />
-            <h4>WhatsApp</h4>
-            <h5>+123456789</h5>
-            <a href="https://api.whatsapp.com/send?phone=16478782051" target="_blank">Send a message</a>
           </article>
         </div>
 

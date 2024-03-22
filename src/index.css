@@ -12,11 +12,11 @@
 
 :root{
   --color-bg: #1f1f38;
-  --color-bg-variant: #2c2c6c;
-  --color-primary: #4db5ff;
-  --color-primary-variant: rgba(77, 181, 255, 0.4);
+  --color-bg-variant: #131D20;
+  --color-primary: #94FFDF;
+  --color-primary-variant: #94FFDF;
   --color-white: #fff;
-  --color-light: rgba(255, 255, 255, 0.6);
+  --color-light: #F3F3F4;
 
   --transition: all 400ms ease;
 
@@ -35,10 +35,10 @@ html{
 
 body{
   font-family: 'Poppins', sans-serif;
-  background: var(--color-bg);
+  background: rgb(12,16,18);
+  background: radial-gradient(circle, rgba(12,16,18,1) 0%, rgba(7,55,37,1) 30%, rgba(27,89,81,1) 50%, rgba(7,55,37,1) 70%, rgba(12,16,18,1) 100%);
   color: var(--color-white);
   line-height: 1.7;
-  background-image: url(../src/assets/bg-texture.png);
 }
 
 /* =============== General Styles =============== */
@@ -71,11 +71,13 @@ section > h2 {
 
 .text-light{
   color: var(--color-light);
+  font-size: 1.2rem;
+  font-family: monospace;
 }
 
 a{
-  color: var(--color-primary);
-  transition: var(--transition);
+  color: #94FFDF;
+  /* transition: var(--transition); */
 }
 
 a:hover{
@@ -85,7 +87,9 @@ a:hover{
 .btn{
   width: max-content;
   display: inline-block;
-  color: var(--color-primary);
+  color: var(--color-white);
+  background: rgb(10,76,82);
+  background: linear-gradient(180deg, rgba(10,76,82,1) 0%, rgba(13,42,43,1) 100%);
   padding: 0.75rem 1.2rem;
   border-radius: 0.4rem;
   cursor: pointer;
@@ -94,14 +98,15 @@ a:hover{
 }
 
 .btn:hover{
-  background: var(--color-white);
-  color: var(--color-bg);
+  background: #2B937A;
+  color: var(--color-white);
   border-color: transparent;
 }
 
 .btn-primary{
-  background: var(--color-primary);
-  color: var(--color-bg);
+  background: rgb(13,42,43);
+  background: linear-gradient(180deg, rgba(13,42,43,1) 0%, rgba(10,76,82,1) 99%);
+  color: var(--color-white);
 }
 
 img{
