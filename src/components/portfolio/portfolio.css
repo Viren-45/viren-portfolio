@@ -1,10 +1,25 @@
-.portfolio_container{
-  margin-right: 3rem;
+.portfolio_container {
   display: flex;
-  gap: 4rem;
+  gap: 4%;
+  overflow-x: auto;
+  padding-bottom: 1.5rem;
+  /* Add modern scrollbar styles */
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-primary-variant) transparent;
 }
 
-.portfolio_item{
+/* Style the scrollbar track */
+.portfolio_container::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Style the scrollbar thumb */
+.portfolio_container::-webkit-scrollbar-thumb {
+  background-color: var(--color-primary-variant);
+  border-radius: 4px;
+}
+
+.portfolio_item {
   background: var(--color-bg-variant);
   padding: 1.3rem;
   border-radius: 2rem;
@@ -12,71 +27,54 @@
   transition: var(--transition);
 }
 
-.portfolio_item:hover{
+.portfolio_item:hover {
   border-color: var(--color-primary-variant);
   background: transparent;
 }
 
-.portfolio_item-image{
+.portfolio_item-image {
   border-radius: 1.5rem;
   overflow: hidden;
 }
 
-.portfolio_item h3{
+.portfolio_item h3 {
   margin: 1.5rem 0 1.8rem;
-  color: #93FDDD;
+  color: #93fddd;
 }
 
-.portfolio_item-cta{
+.portfolio_item-cta {
   display: flex;
   gap: 1rem;
 }
 
-.portfolio_scroll{
+.portfolio_scroll {
   display: flex;
   overflow-x: auto;
-  ;
 }
 
-
 /* ======== Media Queries (Medium Devices) ========== */
-@media screen and (min-width: 600px){
-  .portfolio_container{
+@media screen and (min-width: 600px) {
+  .portfolio_container {
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: 4%;
     margin: 0;
-  }
-  .portfolio_scroll{
-    margin: 0 4rem 0 4rem;
-  }
-  .spacer{
-    flex: 0 0 1rem;
   }
 }
 
 /* ======== Media Queries (Small Devices) ========== */
-
-@media screen and (max-width: 600px){
-  .portfolio_container{
+@media screen and (max-width: 600px) {
+  .portfolio_container {
     grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  .spacer{
-    flex: 0 0 1rem;
+    gap: 4%;
   }
 }
 
 /* ======== Media Queries (Large Devices) ========== */
-@media screen and (min-width: 1024px){
-  .portfolio_container{
+@media screen and (min-width: 1024px) {
+  .portfolio_container {
     margin-left: 2.4rem;
     grid-template-columns: 1fr 1fr;
-    gap: 7rem;
-  }
-  .portfolio_scroll{
-    margin: 0 8rem 0 8rem;
-  }
-  .spacer{
-    flex: 0 0 0;
+    gap: 4%;
+    width: 92%; /* Adjust width to reduce excessive space */
   }
 }
