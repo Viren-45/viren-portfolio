@@ -1,10 +1,11 @@
 
-import IMG1 from "../../assets/intelliprompt.png"
-import IMG2 from "../../assets/fitness-club.png"
-import IMG3 from "../../assets/lyriks.png"
+import IMG1 from "../../assets/intelliprompt.png";
+import IMG2 from "../../assets/fitness-club.png";
+// import IMG3 from "../../assets/lyriks.png"
 import IMG4 from "../../assets/tesla-clone.PNG";
 import IMG5 from "../../assets/Sneaker-website.PNG";
-import IMG6 from "../../assets/snake-game.png"
+import IMG6 from "../../assets/snake-game.png";
+import IMG7 from "../../assets/simon-game.png";
 
 const projects = [
   {
@@ -41,6 +42,13 @@ const projects = [
     title: "Snake Game",
     github: "https://github.com/Viren-45/snake-game",
     demo: "https://virendra-snakegame.netlify.app/"
+  },
+  {
+    id: 7,
+    image: IMG7,
+    title: "Simon Game (Desktop)",
+    github: "https://github.com/Viren-45/simon-game",
+    demo: "https://virendra-simongame.netlify.app/"
   }
 ]
 
