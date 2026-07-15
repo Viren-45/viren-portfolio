@@ -39,6 +39,7 @@ export default function Navbar() {
               href={link.href}
               label={link.label}
               displayLabel={link.displayLabel}
+              pulseGlow
               className="relative flex flex-col items-center gap-1.5 bg-transparent border-none cursor-pointer"
             >
               <span

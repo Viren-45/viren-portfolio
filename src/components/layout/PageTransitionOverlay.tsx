@@ -1,218 +1,178 @@
 // src/components/layout/PageTransitionOverlay.tsx
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { usePathname, useRouter } from "next/navigation";
 import { useTransition } from "@/lib/utils/transition-context";
-import { useRouter } from "next/navigation";
 
 export default function PageTransitionOverlay() {
   const { state, endTransition } = useTransition();
-  const overlayRef = useRef<HTMLDivElement>(null);
-  const borderRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const progressWrapRef = useRef<HTMLDivElement>(null);
-  const labelRef = useRef<HTMLParagraphElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
   const router = useRouter();
+  const pathname = usePathname();
+  const pathnameRef = useRef(pathname);
+  const overlayRef = useRef<HTMLDivElement>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
+  const mistRef = useRef<HTMLDivElement>(null);
+  const awaitingRouteRef = useRef(false);
+  const [routeReady, setRouteReady] = useState(0);
 
   useEffect(() => {
-    if (!state.isTransitioning) return;
+    pathnameRef.current = pathname;
+  }, [pathname]);
 
-    const overlay = overlayRef.current;
-    const border = borderRef.current;
-    const progress = progressRef.current;
-    const progressWrap = progressWrapRef.current;
-    const label = labelRef.current;
-    const title = titleRef.current;
+  // Phase one: cover the current page, present the destination, then navigate.
+  useEffect(() => {
+    if (!state.isTransitioning || !overlayRef.current) return;
 
-    if (!overlay || !border || !progress || !progressWrap || !label || !title)
+    awaitingRouteRef.current = false;
+    const context = gsap.context(() => {
+      gsap.set(overlayRef.current, {
+        autoAlpha: 1,
+        yPercent: 100,
+        pointerEvents: "auto",
+      });
+      gsap.set(frameRef.current, { filter: "brightness(.55)" });
+      gsap.set(contentRef.current?.children ?? [], { autoAlpha: 0.38, y: 18 });
+      gsap.set(progressRef.current, {
+        scaleX: 0,
+        transformOrigin: "left center",
+      });
+      gsap.set(mistRef.current, { scale: 1.08, yPercent: 5, autoAlpha: 0 });
+
+      gsap
+        .timeline({ defaults: { ease: "power4.inOut" } })
+        .to(overlayRef.current, {
+          yPercent: 0,
+          duration: 0.58,
+        })
+        .to(
+          frameRef.current,
+          { filter: "brightness(1.25)", duration: 0.38, ease: "power2.out" },
+          "-=0.25",
+        )
+        .to(
+          mistRef.current,
+          {
+            autoAlpha: 0.28,
+            scale: 1,
+            yPercent: 0,
+            duration: 0.5,
+            ease: "power2.out",
+          },
+          "-=0.38",
+        )
+        .to(
+          contentRef.current?.children ?? [],
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.34,
+            stagger: 0.06,
+            ease: "power3.out",
+          },
+          "-=0.42",
+        )
+        .to(
+          progressRef.current,
+          { scaleX: 0.88, duration: 0.46, ease: "power2.inOut" },
+          "-=0.22",
+        )
+        .add(() => {
+          awaitingRouteRef.current = true;
+          if (pathnameRef.current === state.destination) {
+            setRouteReady((value) => value + 1);
+          } else {
+            router.push(state.destination);
+          }
+        });
+    }, overlayRef);
+
+    return () => context.revert();
+  }, [state.isTransitioning, state.destination, router]);
+
+  // Phase two: the destination is committed; finish the line and sweep away.
+  useEffect(() => {
+    if (
+      !state.isTransitioning ||
+      !awaitingRouteRef.current ||
+      pathname !== state.destination ||
+      !overlayRef.current
+    )
       return;
 
-    // Reset
-    gsap.set(overlay, { autoAlpha: 0, yPercent: 0 });
-    gsap.set(border, { autoAlpha: 0 });
-    gsap.set(progress, { scaleX: 0, transformOrigin: "left center" });
-    gsap.set(progressWrap, { autoAlpha: 0 });
-    gsap.set([label, title], { autoAlpha: 0, y: 10 });
-
-    const tl = gsap.timeline();
-
-    // 1. Fade in overlay
-    tl.to(overlay, {
-      autoAlpha: 1,
-      duration: 0.3,
-      ease: "power2.out",
-    })
-
-      // 2. Fade in glowing border
-      .to(
-        border,
-        {
-          autoAlpha: 1,
-          duration: 0.4,
-          ease: "power2.out",
+    awaitingRouteRef.current = false;
+    const reveal = gsap
+      .timeline({
+        onComplete: () => {
+          gsap.set(overlayRef.current, { autoAlpha: 0, pointerEvents: "none" });
+          endTransition();
         },
-        "<",
-      )
-
-      // 3. Fade in content
-      .to(
-        [label, title],
-        {
-          autoAlpha: 1,
-          y: 0,
-          duration: 0.35,
-          stagger: 0.08,
-          ease: "power2.out",
-        },
-        "-=0.1",
-      )
-
-      // 4. Fade in progress bar and start moving to ~88%
-      .to(
-        progressWrap,
-        {
-          autoAlpha: 1,
-          duration: 0.2,
-          ease: "power2.out",
-        },
-        "-=0.2",
-      )
-      .to(
-        progress,
-        {
-          scaleX: 0.88,
-          duration: 1.4,
-          ease: "power1.out",
-        },
-        "<",
-      )
-
-      // 5. Navigate
-      .add(() => {
-        router.push(state.destination);
       })
-
-      // 6. Snap to 100%
-      .to(progress, {
+      .to(progressRef.current, {
         scaleX: 1,
-        duration: 0.25,
+        duration: 0.12,
         ease: "power2.out",
       })
+      .to(
+        frameRef.current,
+        { filter: "brightness(.72)", duration: 0.16, ease: "power2.in" },
+        "+=0.04",
+      )
+      .to(
+        overlayRef.current,
+        { yPercent: -100, duration: 0.62, ease: "power4.inOut" },
+        "-=0.06",
+      );
 
-      // 7. Brief pause
-      .to({}, { duration: 0.25 })
-
-      // 8. Sweep overlay upward to reveal page
-      .to(overlay, {
-        yPercent: -100,
-        duration: 0.7,
-        ease: "power3.inOut",
-        onComplete: endTransition,
-      });
-  }, [state.isTransitioning, state.destination, router, endTransition]);
-
-  if (!state.isTransitioning) return null;
+    return () => {
+      reveal.kill();
+    };
+  }, [
+    pathname,
+    routeReady,
+    state.destination,
+    state.isTransitioning,
+    endTransition,
+  ]);
 
   return (
     <div
       ref={overlayRef}
-      className="fixed inset-0 z-9999 flex flex-col items-center justify-center"
-      style={{ backgroundColor: "#0D1117" }}
+      aria-hidden={!state.isTransitioning}
+      aria-live="polite"
+      className="invisible fixed inset-0 z-9999 flex items-center justify-center overflow-hidden bg-[#080f17] opacity-0"
     >
-      {/* SVG Noise texture */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeBlend mode='screen'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "repeat",
-          mixBlendMode: "soft-light",
-          opacity: 0.4,
-        }}
+        ref={mistRef}
+        className="pointer-events-none absolute inset-[-3%] bg-[linear-gradient(rgba(8,15,23,.7),rgba(8,15,23,.82)),url('/images/hero-bg-main.png')] bg-cover bg-center bg-no-repeat opacity-0"
       />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_52%_45%,rgba(91,105,117,.18),transparent_44%)]" />
+      <div className="pointer-events-none absolute inset-0 opacity-25 bg-[radial-gradient(circle_at_18%_25%,rgba(255,255,255,.04)_0_1px,transparent_1.5px),radial-gradient(circle_at_78%_66%,rgba(255,255,255,.035)_0_1px,transparent_1.5px)] bg-size-[17px_17px,23px_23px]" />
 
-      {/* Glowing golden border on all four sides */}
-      <div
-        ref={borderRef}
-        className="absolute inset-4 pointer-events-none"
-        style={{
-          border: "1px solid #C9A84C60",
-          boxShadow:
-            "inset 0 0 30px #C9A84C15, 0 0 30px #C9A84C15, inset 0 0 60px #C9A84C08",
-        }}
-      />
-
-      {/* Corner accents — top left */}
-      <div
-        className="absolute top-4 left-4 w-8 h-8 pointer-events-none"
-        style={{
-          borderTop: "1px solid #C9A84C",
-          borderLeft: "1px solid #C9A84C",
-          filter: "drop-shadow(0 0 4px #C9A84C)",
-        }}
-      />
-      {/* Corner accents — top right */}
-      <div
-        className="absolute top-4 right-4 w-8 h-8 pointer-events-none"
-        style={{
-          borderTop: "1px solid #C9A84C",
-          borderRight: "1px solid #C9A84C",
-          filter: "drop-shadow(0 0 4px #C9A84C)",
-        }}
-      />
-      {/* Corner accents — bottom left */}
-      <div
-        className="absolute bottom-4 left-4 w-8 h-8 pointer-events-none"
-        style={{
-          borderBottom: "1px solid #C9A84C",
-          borderLeft: "1px solid #C9A84C",
-          filter: "drop-shadow(0 0 4px #C9A84C)",
-        }}
-      />
-      {/* Corner accents — bottom right */}
-      <div
-        className="absolute bottom-4 right-4 w-8 h-8 pointer-events-none"
-        style={{
-          borderBottom: "1px solid #C9A84C",
-          borderRight: "1px solid #C9A84C",
-          filter: "drop-shadow(0 0 4px #C9A84C)",
-        }}
-      />
-
-      {/* Center content */}
-      <div className="relative z-10 flex flex-col items-center gap-4">
-        <p
-          ref={labelRef}
-          className="text-xs tracking-[0.4em] text-[#E8E8E8]/50"
-          style={{ fontFamily: "var(--font-inter)" }}
-        >
-          NAVIGATING TO
-        </p>
-
-        <h2
-          ref={titleRef}
-          className="text-7xl font-light tracking-[0.15em] text-[#FFFFFF] uppercase"
-          style={{ fontFamily: "var(--font-cormorant)" }}
-        >
-          {state.destinationLabel}
-        </h2>
+      <div ref={frameRef} className="pointer-events-none absolute inset-0">
+        <span className="absolute inset-x-0 top-0 h-1.5 bg-linear-to-r from-[#8c5b20]/15 via-[#f4c56d]/70 to-[#8c5b20]/15 blur-[3px] shadow-[0_2px_8px_rgba(231,180,86,.7)]" />
+        <span className="absolute inset-x-0 bottom-0 h-1.5 bg-linear-to-r from-[#8c5b20]/15 via-[#f4c56d]/70 to-[#8c5b20]/15 blur-[3px] shadow-[0_-2px_8px_rgba(231,180,86,.7)]" />
+        <span className="absolute inset-y-0 left-0 w-1.5 bg-linear-to-b from-[#8c5b20]/15 via-[#f4c56d]/70 to-[#8c5b20]/15 blur-[3px] shadow-[2px_0_8px_rgba(231,180,86,.7)]" />
+        <span className="absolute inset-y-0 right-0 w-1.5 bg-linear-to-b from-[#8c5b20]/15 via-[#f4c56d]/70 to-[#8c5b20]/15 blur-[3px] shadow-[-2px_0_8px_rgba(231,180,86,.7)]" />
       </div>
 
-      {/* Progress bar — positioned in lower center, not at edge */}
       <div
-        ref={progressWrapRef}
-        className="absolute bottom-12 left-1/2 -translate-x-1/2 w-64"
+        ref={contentRef}
+        className="relative z-10 flex max-w-[90vw] flex-col items-center text-center"
       >
-        <div className="w-full h-0.5 bg-[#E8E8E8]/10 rounded-full">
+        <p className="text-[10px] font-medium uppercase tracking-[0.42em] text-white/55 sm:text-xs">
+          Navigating to
+        </p>
+        <h2 className="mt-5 font-(family-name:--font-cormorant) text-5xl font-normal uppercase tracking-[0.08em] text-white sm:text-7xl lg:text-8xl">
+          {state.destinationLabel}
+        </h2>
+        <div className="mt-7 h-px w-52 overflow-visible bg-white/15 sm:w-72">
           <div
             ref={progressRef}
-            className="h-full origin-left rounded-full"
-            style={{
-              backgroundColor: "#C9A84C",
-              boxShadow:
-                "0 0 8px #C9A84C, 0 0 20px #C9A84C80, 0 0 40px #C9A84C40",
-            }}
+            className="relative h-px w-full origin-left bg-[#c9a45f] shadow-[0_0_8px_#c9a45f,0_0_24px_rgba(201,164,95,.55)] after:absolute after:-right-1 after:-top-1 after:size-2 after:rounded-full after:bg-[#f1cf8d] after:shadow-[0_0_14px_#d7ad5f]"
           />
         </div>
       </div>

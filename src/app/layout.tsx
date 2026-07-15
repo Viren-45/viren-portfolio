@@ -4,6 +4,7 @@ import { Inter, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import { TransitionProvider } from "@/lib/utils/transition-context";
 import PageTransitionOverlay from "@/components/layout/PageTransitionOverlay";
+import AdminKeyListener from "@/components/admin/AdminKeyListener";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -35,6 +36,7 @@ export default function RootLayout({
     >
       <body>
         <TransitionProvider>
+          <AdminKeyListener />
           {children}
           <PageTransitionOverlay />
         </TransitionProvider>
