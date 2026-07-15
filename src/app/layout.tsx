@@ -5,6 +5,7 @@ import "./globals.css";
 import { TransitionProvider } from "@/lib/utils/transition-context";
 import PageTransitionOverlay from "@/components/layout/PageTransitionOverlay";
 import AdminKeyListener from "@/components/admin/AdminKeyListener";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -39,6 +40,7 @@ export default function RootLayout({
           <AdminKeyListener />
           {children}
           <PageTransitionOverlay />
+          <Toaster />
         </TransitionProvider>
       </body>
     </html>
