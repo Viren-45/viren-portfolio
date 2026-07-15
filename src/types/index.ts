@@ -16,6 +16,34 @@ export interface AdminLoginAttempt {
   created_at: string;
 }
 
+// ─── Projects ─────────────────────────────────────────────────────────────────
+
+export interface Project {
+  id: string;
+  name: string;
+  short_description: string;
+  category: string;
+  tech_stack: string[];
+  cover_image_url: string;
+  live_url: string | null;
+  github_url: string | null;
+  display_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export type ProjectFormData = Omit<Project, "id" | "created_at" | "updated_at">;
+
+export const PROJECT_CATEGORIES = [
+  "Full Stack",
+  "Backend",
+  "Cybersecurity",
+  "Data / Analytics",
+  "Other",
+] as const;
+
+export type ProjectCategory = (typeof PROJECT_CATEGORIES)[number];
+
 // ─── Contact ─────────────────────────────────────────────────────────────────
 
 export interface ContactMessage {
