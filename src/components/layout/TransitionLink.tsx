@@ -3,7 +3,12 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useRef, type MouseEvent, type ReactNode } from "react";
+import {
+  useRef,
+  type MouseEvent,
+  type ReactNode,
+  type CSSProperties,
+} from "react";
 import gsap from "gsap";
 import { useTransition } from "@/lib/utils/transition-context";
 
@@ -14,6 +19,7 @@ interface TransitionLinkProps {
   children: ReactNode;
   className?: string;
   pulseGlow?: boolean;
+  style?: CSSProperties;
 }
 
 export default function TransitionLink({
@@ -23,6 +29,7 @@ export default function TransitionLink({
   children,
   className,
   pulseGlow = false,
+  style,
 }: TransitionLinkProps) {
   const { startTransition, state } = useTransition();
   const router = useRouter();
@@ -60,6 +67,7 @@ export default function TransitionLink({
       ref={linkRef}
       href={href}
       onClick={handleClick}
+      style={style}
       className={`${pulseGlow ? "isolate" : ""} ${className ?? ""}`}
       aria-label={`Navigate to ${label}`}
     >

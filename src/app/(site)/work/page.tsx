@@ -8,7 +8,7 @@ export default async function WorkPage() {
 
   return (
     <main
-      className="min-h-screen flex flex-col w-full"
+      className="min-h-screen flex flex-col w-full pb-14 md:pb-0"
       style={{ backgroundColor: "#0D1117" }}
     >
       <WorkHero />

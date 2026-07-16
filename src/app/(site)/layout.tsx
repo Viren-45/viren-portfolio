@@ -1,5 +1,6 @@
 // src/app/(site)/layout.tsx:
 import Navbar from "@/components/layout/Navbar";
+import MobileNav from "@/components/layout/MobileNav";
 
 export default function SiteLayout({
   children,
@@ -9,6 +10,7 @@ export default function SiteLayout({
   return (
     <>
       <Navbar />
+      <MobileNav />
       {children}
     </>
   );

@@ -7,7 +7,10 @@ import AboutPersonal from "@/components/about/AboutPersonal";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen" style={{ backgroundColor: "#0D1117" }}>
+    <main
+      className="min-h-screen pb-14 md:pb-0"
+      style={{ backgroundColor: "#0D1117" }}
+    >
       <AboutHero />
       <AboutBio />
       <AboutWhatIDo />

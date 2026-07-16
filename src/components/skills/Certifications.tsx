@@ -79,11 +79,6 @@ export default function Certifications() {
     [maxIndex],
   );
 
-  const prevSlide = useCallback(
-    () => setActiveIndex((prev) => (prev <= 0 ? maxIndex : prev - 1)),
-    [maxIndex],
-  );
-
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(nextSlide, 4000);

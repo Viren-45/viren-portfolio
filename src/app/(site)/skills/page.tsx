@@ -7,7 +7,10 @@ import SkillsClosingQuote from "@/components/skills/SkillsClosingQuote";
 
 export default function SkillsPage() {
   return (
-    <main className="min-h-screen" style={{ backgroundColor: "#0D1117" }}>
+    <main
+      className="min-h-screen pb-14 md:pb-0"
+      style={{ backgroundColor: "#0D1117" }}
+    >
       <SkillsHero />
       <TechnicalSkills />
       <Certifications />
