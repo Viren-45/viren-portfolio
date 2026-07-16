@@ -28,13 +28,13 @@ const infoCards = [
 const socials = [
   {
     icon: FaGithub,
-    href: "https://github.com/yourhandle",
+    href: "https://github.com/Viren-45",
     label: "GitHub",
     gold: false,
   },
   {
     icon: FaLinkedin,
-    href: "https://linkedin.com/in/yourhandle",
+    href: "https://www.linkedin.com/in/virendra-purohit/",
     label: "LinkedIn",
     gold: false,
   },
