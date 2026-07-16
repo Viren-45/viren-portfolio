@@ -78,7 +78,7 @@ export default function Navbar() {
       </header>
 
       {/* Mobile header — centered code tag with name */}
-      <header
+      {/* <header
         className="flex md:hidden fixed top-0 left-0 right-0 z-50 items-center justify-center py-4"
         style={{
           backgroundColor: "rgba(10,14,20,0.85)",
@@ -98,7 +98,7 @@ export default function Navbar() {
         >
           &lt;/Virendra&gt;
         </span>
-      </header>
+      </header> */}
     </>
   );
 }

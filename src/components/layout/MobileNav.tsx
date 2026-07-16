@@ -20,7 +20,7 @@ export default function MobileNav() {
   return (
     <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 md:hidden">
       <div
-        className="relative flex items-center px-3 py-3 rounded-full"
+        className="relative flex items-center px-1 py-3 rounded-full"
         style={{
           backgroundColor: "rgba(10,14,20,0.90)",
           backdropFilter: "blur(24px)",
@@ -76,7 +76,7 @@ export default function MobileNav() {
                         border: "1px solid rgba(201,168,76,0.5)",
                         boxShadow:
                           "0 0 16px rgba(201,168,76,0.2), inset 0 0 12px rgba(201,168,76,0.05)",
-                        minWidth: "72px",
+                        minWidth: "62px",
                       }
                     : {
                         border: "1px solid transparent",

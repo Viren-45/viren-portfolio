@@ -74,7 +74,7 @@ export default function TypewriterTitle() {
 
   return (
     <h2
-      className="text-5xl font-normal text-[#E8E8E8] mb-6 flex items-center gap-1 min-h-14"
+      className="text-3xl md:text-5xl font-normal text-[#E8E8E8] mb-6 flex items-center gap-1 min-h-10 md:min-h-14"
       style={{ fontFamily: "var(--font-cormorant)" }}
     >
       <span ref={textRef} />
