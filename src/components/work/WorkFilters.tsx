@@ -1,6 +1,8 @@
 // src/components/work/WorkFilters.tsx
 "use client";
 
+import SortDropdown from "./SortDropdown";
+
 interface WorkFiltersProps {
   categories: string[];
   selectedCategory: string;
@@ -17,61 +19,90 @@ export default function WorkFilters({
   onSortChange,
 }: WorkFiltersProps) {
   return (
-    <div className="flex items-center justify-between px-20 py-5">
-      {/* Category filter */}
-      <select
-        value={selectedCategory}
-        onChange={(e) => onCategoryChange(e.target.value)}
-        className="rounded-lg px-4 py-2 text-sm text-[#E8E8E8]/70 outline-none transition-colors"
-        style={{
-          fontFamily: "var(--font-inter)",
-          backgroundColor: "rgba(255,255,255,0.04)",
-          border: "1px solid rgba(232,232,232,0.12)",
-          minWidth: "180px",
-        }}
-      >
-        <option value="all" style={{ backgroundColor: "#0D1117" }}>
-          All Categories
-        </option>
-        {categories.map((cat) => (
-          <option key={cat} value={cat} style={{ backgroundColor: "#0D1117" }}>
-            {cat}
-          </option>
-        ))}
-      </select>
+    <div className="w-full px-8 md:px-20 py-6">
+      <div className="max-w-6xl mx-auto flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+        {/* Category filter tabs */}
+        <div className="flex flex-wrap gap-2">
+          {/* All Projects tab */}
+          <button
+            onClick={() => onCategoryChange("all")}
+            className="relative px-5 py-2 rounded-full text-xs tracking-wide transition-all duration-200 overflow-hidden cursor-pointer"
+            style={{
+              fontFamily: "var(--font-inter)",
+              backgroundColor:
+                selectedCategory === "all"
+                  ? "rgba(201,168,76,0.12)"
+                  : "rgba(10,14,20,0.85)",
+              backdropFilter: "blur(16px)",
+              WebkitBackdropFilter: "blur(16px)",
+              border:
+                selectedCategory === "all"
+                  ? "1px solid rgba(201,168,76,0.4)"
+                  : "1px solid rgba(201,168,76,0.15)",
+              color:
+                selectedCategory === "all"
+                  ? "#C9A84C"
+                  : "rgba(232,232,232,0.6)",
+            }}
+          >
+            {selectedCategory === "all" && (
+              <span className="mr-1.5 inline-block w-1.5 h-1.5 rounded-full bg-[#C9A84C] align-middle" />
+            )}
+            All Projects
+            {selectedCategory === "all" && (
+              <span
+                className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-px"
+                style={{
+                  background:
+                    "linear-gradient(to right, transparent, #C9A84C, transparent)",
+                  boxShadow: "0 0 8px #C9A84C",
+                }}
+              />
+            )}
+          </button>
 
-      {/* Sort by */}
-      <div className="flex items-center gap-3">
-        <span
-          className="text-xs text-[#E8E8E8]/40"
-          style={{ fontFamily: "var(--font-inter)" }}
-        >
-          Sort by:
-        </span>
-        <select
-          value={sortBy}
-          onChange={(e) => onSortChange(e.target.value)}
-          className="rounded-lg px-4 py-2 text-sm text-[#E8E8E8]/70 outline-none"
-          style={{
-            fontFamily: "var(--font-inter)",
-            backgroundColor: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(232,232,232,0.12)",
-            minWidth: "160px",
-          }}
-        >
-          <option value="display_order" style={{ backgroundColor: "#0D1117" }}>
-            Display Order
-          </option>
-          <option value="newest" style={{ backgroundColor: "#0D1117" }}>
-            Newest First
-          </option>
-          <option value="oldest" style={{ backgroundColor: "#0D1117" }}>
-            Oldest First
-          </option>
-          <option value="az" style={{ backgroundColor: "#0D1117" }}>
-            A → Z
-          </option>
-        </select>
+          {/* Dynamic category tabs */}
+          {categories.map((cat) => {
+            const isActive = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => onCategoryChange(cat)}
+                className="relative px-5 py-2 rounded-full text-xs tracking-wide transition-all duration-200 overflow-hidden cursor-pointer"
+                style={{
+                  fontFamily: "var(--font-inter)",
+                  backgroundColor: isActive
+                    ? "rgba(201,168,76,0.12)"
+                    : "rgba(10,14,20,0.85)",
+                  backdropFilter: "blur(16px)",
+                  WebkitBackdropFilter: "blur(16px)",
+                  border: isActive
+                    ? "1px solid rgba(201,168,76,0.4)"
+                    : "1px solid rgba(201,168,76,0.15)",
+                  color: isActive ? "#C9A84C" : "rgba(232,232,232,0.6)",
+                }}
+              >
+                {isActive && (
+                  <span className="mr-1.5 inline-block w-1.5 h-1.5 rounded-full bg-[#C9A84C] align-middle" />
+                )}
+                {cat}
+                {isActive && (
+                  <span
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-px"
+                    style={{
+                      background:
+                        "linear-gradient(to right, transparent, #C9A84C, transparent)",
+                      boxShadow: "0 0 8px #C9A84C",
+                    }}
+                  />
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Sort dropdown */}
+        <SortDropdown value={sortBy} onValueChange={onSortChange} />
       </div>
     </div>
   );

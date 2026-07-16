@@ -1,53 +1,69 @@
 // src/components/work/WorkHero.tsx
-import Image from "next/image";
+import Link from "next/link";
 
 export default function WorkHero() {
   return (
-    <section
-      className="relative w-full overflow-hidden shrink-0"
-      style={{ height: "300px" }}
-    >
-      {/* Background image */}
-      <Image
-        src="/images/work-bg.png"
-        alt="Work background"
-        fill
-        priority
-        className="object-cover object-center"
-        quality={90}
-      />
-
-      {/* Dark overlay */}
-      <div className="absolute inset-0 bg-[#0D1117]/35" />
-
-      {/* Top gradient for navbar readability */}
-      <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-[#0D1117]/70 to-transparent z-1" />
-
-      {/* Content */}
-      <div className="absolute inset-0 z-10 flex flex-col justify-end px-20 pb-12">
-        <div className="flex items-center gap-4 mb-3">
+    <section className="relative w-full px-8 md:px-20 pt-14 md:pt-40 pb-8">
+      <div className="max-w-6xl mx-auto flex flex-col gap-4 items-center text-center md:items-start md:text-left">
+        {/* Label */}
+        <div className="flex items-center gap-3">
+          <div
+            className="w-2 h-2 rounded-full"
+            style={{
+              backgroundColor: "#C9A84C",
+              boxShadow: "0 0 8px #C9A84C",
+            }}
+          />
           <span
-            className="text-xs tracking-[0.3em] text-[#E8E8E8]/60"
+            className="text-xs tracking-[0.35em] text-[#C9A84C] uppercase"
             style={{ fontFamily: "var(--font-inter)" }}
           >
-            MY WORK
+            Work
           </span>
-          <span className="w-8 h-px bg-[#C9A84C]" />
         </div>
+
+        {/* Heading */}
         <h1
-          className="text-6xl font-light text-[#FFFFFF] mb-4"
+          className="text-5xl md:text-6xl font-light text-[#FFFFFF] leading-tight"
           style={{ fontFamily: "var(--font-cormorant)" }}
         >
-          All Projects
+          Turning ideas into
+          <br />
+          <span style={{ color: "#C9A84C" }}>real impact.</span>
         </h1>
+
+        {/* Subtitle */}
         <p
-          className="text-sm text-[#E8E8E8]/60 max-w-sm leading-relaxed"
+          className="text-sm text-[#E8E8E8]/50 mt-2 max-w-md mx-auto md:mx-0"
           style={{ fontFamily: "var(--font-inter)" }}
         >
-          A selection of projects where strategy and development come together
-          to create impactful digital experiences.
+          A selection of projects where design, code and strategy come together
+          to solve real problems.
         </p>
+
+        {/* CTA */}
+        <Link
+          href="/contact"
+          className="flex items-center gap-3 px-6 py-3 rounded-xl w-fit text-sm text-[#C9A84C] transition-all duration-300 hover:-translate-y-0.5 mt-2"
+          style={{
+            fontFamily: "var(--font-inter)",
+            backgroundColor: "rgba(201,168,76,0.06)",
+            border: "1px solid rgba(201,168,76,0.35)",
+          }}
+        >
+          Let&apos;s build something great
+          <span className="text-base">↗</span>
+        </Link>
       </div>
+
+      {/* Radial background glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 50% 60% at 5% 65%, rgba(201,168,76,0.08) 0%, transparent 60%)",
+        }}
+      />
     </section>
   );
 }

@@ -1,6 +1,6 @@
 // src/app/(site)/work/page.tsx
 import WorkHero from "@/components/work/WorkHero";
-import ProjectsGrid from "@/components/work/ProjectsGrid";
+import WorkContent from "@/components/work/WorkContent";
 import { getPublicProjectsServer } from "@/lib/supabase/queries/projects";
 
 export default async function WorkPage() {
@@ -8,11 +8,11 @@ export default async function WorkPage() {
 
   return (
     <main
-      className="min-h-screen flex flex-col w-full pb-14 md:pb-0"
+      className="min-h-screen pb-28 md:pb-0"
       style={{ backgroundColor: "#0D1117" }}
     >
       <WorkHero />
-      <ProjectsGrid projects={projects} />
+      <WorkContent projects={projects} />
     </main>
   );
 }
