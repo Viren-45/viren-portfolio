@@ -1,4 +1,5 @@
 // src/components/hero/HeroSection.tsx
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { FaLinkedin, FaGithub } from "react-icons/fa";
@@ -42,24 +43,48 @@ export default function HeroSection() {
         {/* Top gradient */}
         <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-[#0D1117]/70 to-transparent z-1" />
 
-        {/* Social Icons — left side */}
-        <div className="absolute left-8 bottom-50 flex flex-col gap-6 z-10">
-          {socialLinks.map(({ icon: Icon, href, label }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="text-white hover:text-[#E8E8E8] transition-colors duration-200"
-            >
-              <Icon size={25} />
-            </a>
-          ))}
+        {/* Social Icons — right edge glass panel */}
+        <div className="absolute right-8 top-1/2 -translate-y-1/2 z-10">
+          <div
+            className="flex flex-col items-center gap-6 px-4 py-6 rounded-2xl"
+            style={{
+              backgroundColor: "rgba(7,16,23,0.65)",
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              border: "1px solid rgba(201,168,76,0.35)",
+              boxShadow: "0 18px 45px rgba(0,0,0,0.35)",
+            }}
+          >
+            {socialLinks.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target={href.startsWith("mailto:") ? undefined : "_blank"}
+                rel={
+                  href.startsWith("mailto:") ? undefined : "noopener noreferrer"
+                }
+                aria-label={label}
+                className="text-[#C9A84C] transition-all duration-300 hover:scale-110 hover:text-[#ffd77a]"
+                style={{
+                  filter: "drop-shadow(0 0 0px transparent)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.filter =
+                    "drop-shadow(0 0 8px rgba(201,168,76,0.7))";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.filter =
+                    "drop-shadow(0 0 0px transparent)";
+                }}
+              >
+                <Icon size={22} />
+              </a>
+            ))}
+          </div>
         </div>
 
         {/* Hero Content */}
-        <div className="absolute inset-0 z-10 flex flex-col justify-center px-40 max-w-4xl">
+        <div className="absolute inset-0 z-10 flex flex-col justify-center px-30 max-w-4xl">
           <div className="flex items-center gap-4 mb-4">
             <span
               className="text-xs tracking-[0.3em] text-[#E8E8E8]/80"
@@ -90,19 +115,42 @@ export default function HeroSection() {
           </p>
 
           <div className="flex items-center gap-4">
+            {/* VIEW MY WORK — gold gradient with pulse sparkle */}
             <Link
               href="/work"
-              className="flex items-center gap-3 px-8 py-4 bg-[#715E3F] text-[#E8E8E8] text-xs tracking-[0.2em] hover:bg-[#B8963E] transition-colors duration-200"
-              style={{ fontFamily: "var(--font-inter)" }}
+              className="relative flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-xs tracking-[0.2em] text-[#FFFFFF] font-semibold transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 overflow-hidden"
+              style={{
+                fontFamily: "var(--font-inter)",
+                background: "linear-gradient(135deg, #C9A84C 0%, #8D6C3C 100%)",
+                boxShadow: "0 4px 20px rgba(201,168,76,0.35)",
+              }}
             >
+              <span className="relative flex items-center justify-center w-4 h-4">
+                <span
+                  className="absolute inline-flex w-full h-full rounded-full animate-ping"
+                  style={{
+                    backgroundColor: "rgba(255,255,255,0.3)",
+                    animationDuration: "1.5s",
+                  }}
+                />
+                <span className="relative text-[10px] text-white">✦</span>
+              </span>
               VIEW MY WORK
-              <span>→</span>
+              <span className="text-base">→</span>
             </Link>
+
+            {/* DOWNLOAD RESUME — glass with gold border */}
             <a
               href="/resume.pdf"
               download
-              className="flex items-center gap-3 px-8 py-4 border border-[#E8E8E8]/50 text-[#E8E8E8] text-xs tracking-[0.2em] hover:bg-[#E8E8E8]/10 transition-colors duration-200"
-              style={{ fontFamily: "var(--font-inter)" }}
+              className="flex items-center justify-center gap-3 px-8 py-4 rounded-xl text-[#E8E8E8] text-xs tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5"
+              style={{
+                fontFamily: "var(--font-inter)",
+                backgroundColor: "rgba(255,255,255,0.05)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                border: "1px solid rgba(201,168,76,0.35)",
+              }}
             >
               DOWNLOAD RESUME
               <span>↓</span>

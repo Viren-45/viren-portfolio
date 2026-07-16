@@ -22,13 +22,32 @@ export default function Navbar() {
       {/* Desktop navbar */}
       <header className="hidden md:flex fixed top-0 left-0 right-0 z-50 items-center justify-between px-8 py-6">
         {/* Monogram Logo */}
-        <Link href="/" className="flex items-center justify-center">
+        <Link
+          href="/"
+          className="flex flex-col items-center justify-center gap-1"
+        >
           <span
-            className="text-4xl font-medium tracking-tight text-[#E8E8E8]"
-            style={{ fontFamily: "var(--font-cormorant)" }}
+            className="text-4xl font-medium tracking-tight"
+            style={{
+              fontFamily: "var(--font-cormorant)",
+              background:
+                "linear-gradient(180deg, #ffd06a 0%, #e9a92e 50%, #b76c08 100%)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
           >
             VP
           </span>
+          {/* Glow line */}
+          <div
+            className="w-10 h-px"
+            style={{
+              background:
+                "linear-gradient(to right, transparent, #C9A84C, transparent)",
+              boxShadow: "0 0 8px #C9A84C, 0 0 16px rgba(201,168,76,0.5)",
+            }}
+          />
         </Link>
 
         {/* Nav Links */}
@@ -69,11 +88,22 @@ export default function Navbar() {
           href="/contact"
           label="CONTACT"
           displayLabel="CONTACT"
-          className="hidden md:block px-6 py-2.5 border border-[#E8E8E8]/50 text-[#E8E8E8] text-xs tracking-[0.2em] hover:bg-[#E8E8E8]/10 transition-colors duration-200 bg-transparent cursor-pointer"
+          className="hidden md:flex items-center gap-2 px-6 py-2.5 rounded-xl text-xs tracking-[0.2em] transition-all duration-300 hover:-translate-y-0.5 cursor-pointer"
+          style={{
+            fontFamily: "var(--font-inter)",
+            backgroundColor: "rgba(7,16,23,0.7)",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            border: "1px solid rgba(201,168,76,0.5)",
+            boxShadow:
+              "0 0 12px rgba(201,168,76,0.15), inset 0 0 12px rgba(201,168,76,0.05)",
+            color: "#C9A84C",
+          }}
         >
           <span style={{ fontFamily: "var(--font-inter)" }}>
             LET&apos;S TALK
           </span>
+          <span className="text-base">→</span>
         </TransitionLink>
       </header>
 
