@@ -1,4 +1,5 @@
 // src/app/(site)/work/page.tsx
+export const revalidate = 0;
 import WorkHero from "@/components/work/WorkHero";
 import WorkContent from "@/components/work/WorkContent";
 import { getPublicProjectsServer } from "@/lib/supabase/queries/projects";
