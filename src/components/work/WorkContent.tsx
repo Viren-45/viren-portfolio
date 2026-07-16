@@ -29,7 +29,7 @@ export default function WorkContent({ projects }: WorkContentProps) {
         sortBy={sortBy}
         onSortChange={setSortBy}
       />
-      <div className="px-8 md:px-20 pb-16">
+      <div className="px-2 md:px-20 pb-16">
         <div className="max-w-6xl mx-auto">
           <WorkProjectsGrid projects={filtered} />
         </div>

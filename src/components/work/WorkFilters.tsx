@@ -19,7 +19,7 @@ export default function WorkFilters({
   onSortChange,
 }: WorkFiltersProps) {
   return (
-    <div className="w-full px-8 md:px-20 py-6">
+    <div className="w-full px-2 md:px-20 py-6">
       <div className="max-w-6xl mx-auto flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         {/* Category filter tabs */}
         <div className="flex flex-wrap gap-2">
