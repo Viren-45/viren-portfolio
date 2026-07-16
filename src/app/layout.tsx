@@ -22,7 +22,31 @@ const cormorantGaramond = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   title: "Virendra Purohit",
-  description: "Personal portfolio of Virendra Purohit",
+  description:
+    "Full Stack Developer, Backend Engineer & Cybersecurity Analyst. Building scalable web applications and secure systems.",
+  openGraph: {
+    title: "Virendra Purohit",
+    description:
+      "Full Stack Developer, Backend Engineer & Cybersecurity Analyst.",
+    url: "https://virendrapurohit.vercel.app",
+    siteName: "Virendra Purohit",
+    images: [
+      {
+        url: "/images/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Virendra Purohit — Portfolio",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Virendra Purohit",
+    description:
+      "Full Stack Developer, Backend Engineer & Cybersecurity Analyst.",
+    images: ["/images/og-image.png"],
+  },
 };
 
 export default function RootLayout({
