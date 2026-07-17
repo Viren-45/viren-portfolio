@@ -1,4 +1,5 @@
 // src/app/(studio)/studio/projects/page.tsx
+export const revalidate = 0;
 import { getAllProjects } from "@/lib/supabase/queries/projects";
 import ProjectsTable from "@/components/studio/projects/ProjectsTable";
 
